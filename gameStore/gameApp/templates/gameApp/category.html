@@ -1,0 +1,139 @@
+{% extends "gameApp/base.html" %}
+
+{% block title %}Games - {{ category.name }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .category-container {
+        max-width: 1200px;
+        /* margin: 30px auto; */
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-header {
+        text-align: center;
+        background-color: #1a1a40;
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 20px 20px 0 0;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .category-dropdown {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .category-dropdown select {
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .games-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .game-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 220px;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .game-card:hover {
+        transform: scale(1.05);
+    }
+
+    .game-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        object-fit: cover;
+        margin: 0 auto;
+    }
+
+    .game-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 10px;
+        color: #333333;
+    }
+
+    .game-year {
+        font-size: 14px;
+        color: #666666;
+    }
+
+    .game-price {
+        font-size: 16px;
+        color: #1a1a40;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+    .game-rating {
+        font-size: 14px;
+        color: #ffcc00;
+    }
+    .games-list a{
+        text-decoration: none;
+        outline: none;
+        color: inherit;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="category-container">
+    <!-- Category Dropdown -->
+    <div class="category-dropdown">
+        <form method="get" action="{% url 'categories' category.id %}">
+            <select name="category" onchange="this.form.submit()">
+                {% for cat in all_categories %}
+                    <option value="{{ cat.id }}" {% if cat.id == category.id %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    
+    <div class="category-header">{{ category.name }}</div>
+
+    
+    <div class="games-list">
+        {% for game in games %}
+        <div class="game-card">
+            
+            <a href="/games/{{game.title}}"><img src="{{ game.image }}" alt="{{ game.title }} Image" class="game-image"></a>
+
+            
+            <div class="game-title"><a href="/games/{{game.title}}">{{ game.title }}</a></div>
+
+            
+            <div class="game-year">Released: {{ game.year }}</div>
+            <div class="game-rating">Rating: {{ game.rating }}/5</div>
+
+            
+            <div class="game-price">${{ game.price }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

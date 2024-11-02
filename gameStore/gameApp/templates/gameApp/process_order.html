@@ -1,0 +1,35 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}
+Processing Order
+{% endblock %}
+
+{% block content %}
+<div id="processing-container" style="text-align:center; padding:20px;">
+    <h2 id="processing-message">Placing your order...</h2>
+</div>
+
+<script>
+    const messages = [
+        "Placing your order...",
+        "Doing background checks...",
+        "Processing payment...",
+        "Order successfully placed!"
+    ];
+
+    let index = 0;
+
+    function updateMessage() {
+        if (index < messages.length) {
+            document.getElementById("processing-message").innerText = messages[index];
+            index++;
+            setTimeout(updateMessage, 1500); 
+        } else {
+            
+            window.location.href = "/orders/";
+        }
+    }
+
+    setTimeout(updateMessage, 1500); 
+</script>
+{% endblock %}

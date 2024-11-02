@@ -1,0 +1,168 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}Gaming Hub - Home{% endblock %}
+
+{% block extra_styles %}
+<style>
+   
+    .hero {
+        background-image: url('https://png.pngtree.com/background/20231222/original/pngtree-modern-black-joysticks-set-on-abstract-light-wallpaper-perfect-for-gaming-picture-image_6936211.jpg'); 
+        background-size: cover;
+        background-position: center;
+        padding: 100px 20px;
+        color: white;
+        text-align: center;
+        position: relative;
+    }
+    
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 50px;
+        border-radius: 8px;
+        display: inline-block;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .hero .cta-button {
+        background-color: #ffd700;
+        color: black;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .hero .cta-button:hover {
+        background-color: #ffcc00;
+        color: #000;
+    }
+
+    /* Featured section styling */
+    .featured-section {
+        padding: 40px 20px;
+        background-color: #012340; 
+        color: white;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .featured-section h2 {
+        
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: #ffcc00;
+    }
+
+    .featured-grid {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .featured-game {
+        background: linear-gradient(135deg, #6a1b9a, #d5006d); 
+        padding: 20px;
+        border-radius: 8px;
+        width: 250px;
+        transition: transform 0.3s ease;
+    }
+
+    .featured-game:hover {
+        transform: scale(1.05);
+    }
+
+    .featured-game img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .featured-game h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .featured-game p {
+        font-size: 1rem;
+        color: #bbb;
+    }
+
+    .game-categories {
+        display: flex;
+        justify-content: space-around;
+        padding: 40px;
+        background-color: #f6f5f5;
+        color: rgb(30, 2, 2);
+    }
+
+    .category-item {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .category-item img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .category-item h4 {
+        font-size: 1.2rem;
+        color: #0a0f32;
+    }
+    .category-item h4:hover{
+        transform: scale(1.05);
+    }
+    .category-item a{
+        text-decoration: none;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-overlay">
+            <h1>Welcome to Gaming Hub</h1>
+            <p>Your one-stop shop for all things gaming. Discover, buy, and play the best games today!</p>
+            <a href="/games" class="cta-button">Browse Games</a>
+        </div>
+    </div>
+
+    <section class="featured-section">
+        <h2>Featured Games</h2>
+        <div class="featured-grid">
+            {% for game in featured_games %}
+                <div class="featured-game">
+                    <a href="{% url 'custom-game' game.title %}"><img src="{{ game.image }}" alt="{{ game.title }} image"></a>
+                    <h3><a href="{% url 'custom-game' game.title %}" style="color: white; text-decoration: none;">{{ game.title }}</a></h3>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="game-categories">
+        {% for category in categories %}
+            <div class="category-item">
+                <a href="/categories/{{category.id}}"><h4>{{ category.name }}</h4></a>
+                <p>Explore games in this category</p>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

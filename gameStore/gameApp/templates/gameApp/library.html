@@ -1,0 +1,95 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}My Library{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .library-container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 1200px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        
+    }
+
+    .library-title {
+        text-align: center;
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .game-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .game-item {
+        background-color: #fff;
+        border-radius: 8px;
+        margin: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex: 1 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+        text-align: center;
+    }
+
+    .game-image {
+        width: 80%; 
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .play-button {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .play-button:hover {
+        background-color: #45a049;
+    }
+
+    @media (max-width: 768px) {
+        .game-item {
+            flex: 1 1 calc(50% - 20px);
+            max-width: calc(50% - 20px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .game-item {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="library-container">
+    <div class="library-title">My Library</div>
+    <div class="game-list">
+        {% for library_item in library_items %}
+        <div class="game-item">
+            <img src="{{ library_item.game.image }}" alt="{{ library_item.game.title }}" class="game-image">
+            <h3>{{ library_item.game.title }}</h3>
+            
+                <button class="play-button">Play</button>
+            </a>
+        </div>
+        {% empty %}
+        <p>You have no games in your library.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

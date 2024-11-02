@@ -1,0 +1,139 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block extra_styles %}
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    /* background: linear-gradient(135deg, #3a0c7a, #6a0dad, #9b59b6, #00aaff);  */
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    
+   
+}
+
+    .cart-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        align-items: center;
+    }
+
+    .cart-item:last-child {
+        border-bottom: none; /* Remove border from the last item */
+    }
+
+    .cart-item button {
+        padding: 8px 12px;
+        background-color: #ff4757;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .cart-item button:hover {
+        background-color: #ff6b81;
+    }
+
+    .empty-cart {
+        text-align: center;
+        color: #777;
+        padding: 50px 0;
+    }
+
+    #order-message {
+        padding: 10px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+
+    .buy-now-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        width: 200px;
+    }
+
+    .buy-now-button:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2>My Cart</h2>
+
+    {% if items %}
+        <ul>
+            {% for item in items %}
+                <li class="cart-item">
+                    <span>{{ item.product.title }} ({{ item.quantity }}) - ${{ item.product.price }}</span>
+                    <a href="/cart/remove/{{ item.product.title }}"><button>Remove</button></a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="total-price" style="text-align: center; font-size: 20px; margin: 20px 0;">
+            Total Price: ${{ total_price }}
+        </div>
+        <button class="buy-now-button" onclick="processOrder()">Buy Now</button>
+    {% else %}
+        <div class="empty-cart">
+            <p>Your cart is empty.</p>
+        </div>
+    {% endif %}
+    
+    <div id="order-message"></div>
+</div>
+<script>
+function processOrder() {
+    const messages = [
+        "Processing your order...",
+        "Doing background checks...",
+        "Verifying your information...",
+        "Placing your order..."
+    ];
+    const messageContainer = document.getElementById("order-message");
+    let messageIndex = 0;
+
+    const displayMessage = () => {
+        if (messageIndex < messages.length) {
+            messageContainer.innerText = messages[messageIndex];
+            messageIndex++;
+            setTimeout(displayMessage, 1000); 
+        } else {
+            window.location.href = "/orders/add"; 
+        }
+    };
+
+    displayMessage();
+}
+</script>
+{% endblock %}

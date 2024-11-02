@@ -1,0 +1,56 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}Games{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .game-container {
+        /* background: linear-gradient(135deg, #6a1b9a, #d5006d); */
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center; }
+        
+
+    .game-card {
+        /* background: linear-gradient(135deg, #6a1b9a, #d5006d); */
+        background-color:white;
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 15px;
+        margin: 10px; 
+        flex: 1 1 calc(20% - 20px); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        transition: transform 0.3s;
+        text-align: center;
+        max-width: 250px;
+    }
+
+    .game-card img {
+        width: 100%; 
+        height: auto; 
+        cursor:pointer;
+    }
+
+    .game-card:hover {
+        transform: scale(1.05);
+    }
+    .game-card h3{
+        cursor:pointer;
+    }
+    .game-card a{
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="game-container">
+    {% for game in games %}
+    <div class="game-card">
+        <a href="/games/{{game.title}}"><img src="{{ game.image }}" alt="{{ game.title }}"></a>
+        <a href="/games/{{game.title}}"><h3>{{ game.title }}</h3></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

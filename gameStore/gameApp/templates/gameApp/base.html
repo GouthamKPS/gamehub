@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Document{% endblock %}</title>
+    {% block extra_styles %}
+    {% endblock %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Poppins, sans-serif;
+            box-sizing: border-box;
+           
+        }
+        
+    
+        .notifications {
+            background-color: rgb(227, 147, 203);
+        }
+    
+        nav {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.79);
+            justify-content: space-between; /* Change to space-between */
+            align-items: center;
+            height: 10vh;
+            padding: 0 20px; /* Add padding for better spacing */
+        }
+    
+        .logo {
+            font-size: 30px;
+            color: yellow;
+            font-weight: 800;
+            text-shadow: 1px .5px #f7ef06;
+        }
+        
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+            outline: none;
+        }
+    
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center; /* Center align nav items */
+        }
+    
+        .nav-links a {
+            text-decoration: underline;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+            margin-right: 3px;
+            text-decoration-color: transparent;
+        }
+    
+        .nav-links a:hover {
+            color: yellow;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 8px;
+            
+        }
+    
+        .search-input {
+            padding: 5px;
+            margin-left: 20px; /* Space between links and search */
+            border: none;
+            border-radius: 10px;
+            width: 150px; /* Set a fixed width */
+            color: rgba(0, 0, 0, 0.671);
+        }
+    
+        .user-control button {
+            border-radius: 8px;
+            background-color: yellow;
+            color: black;
+            padding: 6px;
+            margin: 0;
+            border: 1px solid black;
+        }
+    
+        .user-control button:hover {
+            color: red;
+            cursor: pointer;
+        }
+        .main-control{
+            display: flex;
+        }
+        .footer {
+    padding: 40px;
+    padding-bottom: 70px;
+    background: linear-gradient(135deg, #1a1a40, #4b006e);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-weight: 400;
+    font-size: 1em;
+    color: #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-top:0px;
+    
+}
+
+.contact, .useful, .about {
+    padding: 0 15px;
+}
+
+.contact {
+    width: 30%;
+}
+
+.useful {
+    width: 25%;
+}
+
+.about {
+    width: 35%;
+}
+
+.contact p, .about h2, .useful h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+}
+
+.contact p {
+    padding-bottom: 15px;
+}
+
+.rights {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.85em;
+    background-color: #101020;
+    color: #d0d0d0;
+    
+}
+
+.useful ul {
+    padding: 0;
+    margin-top: 10px;
+}
+
+.useful li {
+    list-style-type: none;
+    padding: 5px 0;
+}
+
+.useful li a {
+    text-decoration: none;
+    color: #c0c0c0;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.useful li a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.useful h2, .about h2, .contact h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.footer h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #ffffff;
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+.contact p {
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.rights p {
+    margin: 0;
+}
+
+
+    </style>
+    
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/">Gaming Hub</a>
+        </div>
+        
+        <div class="main-control">
+            <ul class="nav-links">
+                <li><a href="/games">Games</a></li>
+                <li><a href="/categories/1">Category</a></li>
+                <li><a href="/publishers">Publishers</a></li>
+                <li><a href="/cart">Cart🛒</a></li>
+                <li><a href="/orders">Orders</a></li>
+                <li><a href="/wishlist">Wishlist</a></li>
+                <li><a href="/library">My library</a></li>
+            </ul>
+            <form action="/search/" method="POST">
+            {%csrf_token%}
+            <input type="text" class="search-input" placeholder="Search" name="searchterm" required>
+            </form>
+        </div>
+        
+        <div class="user-control">
+            {% if user.is_authenticated %}
+            <a href="/logout"><button>Logout</button></a>
+            {% else %}
+            <a href="/login"><button>Login/Register</button></a>
+            {%endif%}
+        </div>
+    </nav>
+
+    <div class="notifications">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+    <div class="footer">
+        <div class="useful">
+            <h2>Gaming Hub 🎮</h2>
+            <ul>
+                <li><a href="#">Game Reviews</a></li>
+                <li><a href="#">Latest Releases</a></li>
+                <li><a href="#">Game Guides</a></li>
+                <li><a href="#">Community Forums</a></li>
+            </ul>
+        </div>
+        <div class="contact">
+            <h2>Stay Connected</h2>
+            <p>----------------------------</p>
+            <p>
+                For inquiries, contact our support team at support@gaminghub.com.
+            </p>
+            <p>
+                Follow us on social media for the latest news and updates on new games and events!
+            </p>
+        </div>
+        <div class="about">
+            <h2>About Us</h2>
+            <p>
+                Gaming Hub is your ultimate destination for all things gaming. We provide in-depth reviews, exciting news, and a platform for gamers to connect. Join our community and immerse yourself in the world of gaming!
+            </p>
+        </div>
+    </div>
+    <div class="rights">
+        <p>Copyright &copy; 2024 Gaming Hub. All Rights Reserved.</p>
+    </div>
+    
+</body>
+</html>

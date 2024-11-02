@@ -1,0 +1,96 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}
+{{ game.title }}
+{% endblock %}
+{% block extra_styles %}
+<style>
+    body{
+        background: linear-gradient(135deg, #6a1b9a, #d5006d);
+        /* background-color: #930ff8b8; */
+    }
+    .game-container{
+        background-color: white;
+        padding: 15px 15px;
+        border: 2px solid black;
+        border-radius: 4px;
+        display:flex;
+        margin: 10px 15%;
+        align-items:center;
+    }
+    .cover-container img {
+        border-radius: 0px;
+        
+    }
+    p{
+        line-height: 1.5;
+    }
+    .cover-container{
+        margin-right:30px;
+    }
+    .info-container p{
+        margin: 5px 0;
+    }
+
+    img{
+        width:300px;
+        height:auto;
+    }
+    .info-container button{
+        padding:8px;
+        border: 2px solid rgb(29, 34, 53);
+        background-color: rgb(230, 247, 255);
+        color:rgb(0, 0, 0);
+        border-radius: 8px;
+        /* border:none; */
+        cursor: pointer;
+        
+    }
+    .info-container a{
+        outline: none;
+    }
+    
+</style>
+{%endblock%}
+
+{% block content %}
+
+
+<div class="game-container">
+
+    <div class="cover-container">
+    <img src="{{game.image}}" alt="{{game.title}}">
+    </div>
+
+    <div class="info-container">
+        <h2>{{ game.title }}</h2>
+        <p style="font-size: 0.9em;">{{game.about}}</p>
+        <p><strong>Publisher:</strong> {{game.publisher}}</p>
+        <hr>
+        <p><strong>Category:</strong> {%for category in categories %}{{category}}{% if not forloop.last %},{% endif %}{%endfor%}</p>
+        <hr>
+        <p><strong>Year of Release:</strong> {{game.year}}</p>
+        <hr>
+        <p><strong>Size:</strong> {{game.size}} GB</p>
+        <hr>
+        <p><strong>Rating:</strong> {{game.rating}}⭐</p>
+        <hr>
+        <p><strong>Price:</strong> ${{game.price}}</p>
+    
+    {%if bought%}
+    <p style="background-color: yellow; padding-left:3px;">Game already bought✅ <a href="/library">Go to library</a></p>
+    {% elif game.id in items %}
+        <p style="background-color: yellow; padding-left:3px;">Added to cart ✅ &nbsp;&nbsp;<a href="/cart">Checkout.</a></p>
+    {% elif not wishlisted %}
+        <a href="/cart/add/{{ game.title }}"><button>Add to cart🛒</button></a>
+        <a href="/wishlist/add/{{ game.id }}"><button>Add to wishlist</button></a>
+    {% else %}
+        <a href="/cart/add/{{ game.title }}"><button>Add to cart</button></a>
+        <p style="display:inline-block; margin-left:7px;">Wishlisted✅</p>
+    {% endif %}
+    </div>
+
+</div>
+
+
+{% endblock %}

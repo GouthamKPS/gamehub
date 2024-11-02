@@ -1,0 +1,102 @@
+{% extends 'gameApp/base.html' %}
+
+{% block title %}
+My Orders
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    
+    /* body{
+        background-image: url("https://static.vecteezy.com/system/resources/previews/003/083/650/non_2x/dark-abstract-square-background-black-mosaic-look-vector.jpg");
+    } */
+    body {
+        font-family: Arial, sans-serif;
+        /* background: linear-gradient(135deg, #3a0c7a, #6a0dad, #9b59b6, #00aaff); */
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+    h2 {
+        text-align: center;
+        margin: 20px 0;
+        color: #4CAF50; 
+    }
+
+    .order-container {
+        
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-item {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .order-item:hover {
+        background-color: #f9f9f9;
+    }
+
+    .order-details {
+        margin: 10px 0;
+    }
+
+    .order-price {
+        font-weight: bold;
+        color: #4CAF50;
+    }
+
+    .no-orders {
+        text-align: center;
+        color: #777;
+        font-size: 18px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="order-container">
+    <h2>My Orders</h2>
+
+    {% if orders %}
+        <ul>
+        {% for order in orders %}
+            <li class="order-item">
+                <strong>Order ID:</strong> {{ order.id }} <br>
+                <strong>Status:</strong> {{ order.get_status_display }} <br>
+                <strong>Placed on:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}
+                <div class="order-details">
+                    <strong>Items:</strong>
+                    <ul>
+                        {% for item in order.items.all %}
+                            <li>
+                                {{ item.quantity }} x {{ item.product.title }} - <span class="order-price">${{ item.price }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-orders">You have no orders.</p>
+    {% endif %}
+</div>
+{% endblock %}
