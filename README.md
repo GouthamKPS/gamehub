@@ -29,4 +29,12 @@ Now import the data by running
 ```bash
 python manage.py loaddata data.json
 ```
+###  Preview
+![{67D5A0D4-DF86-4AFD-A216-CF9AFE7220B4}](https://github.com/user-attachments/assets/edbfcacd-010d-4d09-86e7-db63ec58cfeb)
+----------
+![{219F951A-732F-4702-ADD6-946A0D700F60}](https://github.com/user-attachments/assets/42cae678-9e78-4c0e-8283-df19d8b0ee0b)
+----------
+![{C1618B0F-36D3-4753-8426-F3D0D0090D19}](https://github.com/user-attachments/assets/314e2937-47bf-4dca-be60-7de6083057f4)
+
+
 
